@@ -5,7 +5,8 @@
   "author": "sbin0819",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "deploy": "node deploy-commands.js"
   },
   "dependencies": {
     "@discordjs/builders": "^0.12.0",

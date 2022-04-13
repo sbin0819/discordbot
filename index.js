@@ -38,24 +38,6 @@ client.once('ready', (c) => {
 });
 
 client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand()) return;
-
-  const command = client.commands.get(interaction.commandName);
-
-  if (!command) return;
-
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    console.error(error);
-    await interaction.reply({
-      content: 'There was an error while executing this command!',
-      ephemeral: true,
-    });
-  }
-});
-
-client.on('interactionCreate', (interaction) => {
   if (interaction.isButton()) {
     const filter = (i) => i.customId === 'primary';
     const collector = interaction.channel.createMessageComponentCollector({
@@ -70,6 +52,21 @@ client.on('interactionCreate', (interaction) => {
     collector.on('end', (collected) =>
       console.log(`Collected ${collected.size} items`),
     );
+  }
+  if (!interaction.isCommand()) return;
+
+  const command = client.commands.get(interaction.commandName);
+
+  if (!command) return;
+
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({
+      content: 'There was an error while executing this command!',
+      ephemeral: true,
+    });
   }
 });
 
